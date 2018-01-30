@@ -20,13 +20,17 @@ public class TimeTableTest {
 			TimeTable t = new TimeTable();
 			GregorianCalendar day1 = new GregorianCalendar(2018, 1, 1);
 			GregorianCalendar day2 = new GregorianCalendar(2018, 2, 1);
+			GregorianCalendar day3 = new GregorianCalendar(2018, 1, 2);
 			Appt appt1 = new Appt(25, 1, 1, 1, 2018, "Test", "This is a test"); //Invalid appt
 			Appt appt2 = new Appt(1, 1, 1, 1, 2018, "Test", "This is a test"); //Valid appt at base case time
 			Appt appt3 = new Appt(2, 1, 5, 1, 2018, "Test", "This is a test"); //Valid appt with recurrences 5 days and 1 hour after base time
+			Appt appt4 = new Appt(3, 1, 1, 1, 2018, "Test", "This is a test");
+			Appt appt5 = new Appt(4, 1, 1, 1, 2018, "Test", "This is a test");
 			int[] myArray = new int[]{1, 2, 4};
 			int[] emptyArr = new int[]{};
 			appt3.setRecurrence(myArray, 1, 1, 3);
 			appt2.setRecurrence(emptyArr, 1, 1, 3);
+			appt5.setRecurrence(emptyArr, 3, 3, 3);
 			assertEquals(0, appt2.getRecurDays().length);
 			CalDay c1 = new CalDay(day1);
 			LinkedList<CalDay> temp;
@@ -38,6 +42,10 @@ public class TimeTableTest {
 			c1.addAppt(appt3);
 			t.getApptRange(c1.getAppts(), day1, day2);
 			assertEquals(28, temp.size());
+			c1.addAppt(appt4);
+			t.getApptRange(c1.getAppts(), day1, day2);
+			c1.addAppt(appt5);
+			t.getApptRange(c1.getAppts(), day1, day3);
 
 
 	 }
