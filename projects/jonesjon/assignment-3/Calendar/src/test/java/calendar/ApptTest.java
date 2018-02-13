@@ -135,4 +135,61 @@ public class ApptTest {
 			assertEquals("", appt3.getDescription());
 		}
 
+		@Test
+			public void test07() throws Throwable
+			{
+				Appt appt = new Appt(1, 1, 29, 2, 2018, "Test", "This is a test"); //Check num days
+				Appt appt2 = new Appt(1, 1, 1, 1, 2018, "Test", "This is a test"); //Check start edge case days
+				Appt appt3 = new Appt(1, 0, 5, 1, 2018, "Test", "This is a test"); //Check start edge case minute
+				Appt appt4 = new Appt(0, 1, 5, 1, 2018, "Test", "This is a test"); //Check start edge case hour
+				Appt appt5 = new Appt(1, 1, 5, 1, 2018, "Test", "This is a test"); //Check end edge case days
+				Appt appt6 = new Appt(1, 59, 5, 1, 2018, "Test", "This is a test"); //Check end edge case minute
+				Appt appt7 = new Appt(23, 1, 5, 1, 2018, "Test", "This is a test"); //Check end edge case hour
+				Appt appt8 = new Appt(1, 1, 31, 1, 2018, "Test", "This is a test"); //Check end edge case day
+				Appt appt9 = new Appt(1, 1, 5, 12, 2018, "Test", "This is a test"); //Check end edge case month
+				assertEquals(2, appt.getRecurBy());
+				//Make sure the number of days in february is 28
+				assertFalse(appt.getValid()); //Our start day was 29 in february so it must be invalid
+				assertTrue(appt2.getValid()); //Start day is 1 so we should still get a true
+				assertTrue(appt3.getValid());
+				assertTrue(appt4.getValid());
+				assertTrue(appt5.getValid());
+				assertTrue(appt6.getValid());
+				assertTrue(appt7.getValid());
+				assertTrue(appt8.getValid());
+				assertTrue(appt9.getValid());
+			}
+
+			@Test
+				public void test08() throws Throwable
+				{
+					Appt appt = new Appt(11, 1, 1, 1, 2018, "Test", "This is a test");
+					String goodO;
+					goodO = "\t1/1/2018 at 11:1am ,Test, This is a test\n";
+					assertEquals(goodO, appt.toString());
+
+					appt.setStartHour(-1);
+					assertFalse(appt.getValid());
+					appt.setStartHour(1);
+
+					appt.setStartMinute(-1);
+					assertFalse(appt.getValid());
+					appt.setStartMinute(1);
+
+					appt.setStartDay(-1);
+					assertFalse(appt.getValid());
+					appt.setStartDay(1);
+				}
+
+			@Test
+				public void test09() throws Throwable
+				{
+					Appt appt1 = new Appt(5, 4, 3, 2, 2018, "Test", "This is a test");
+					Appt appt2 = new Appt(5, 4, 3, 2, 2018, "Test", "This is a test");
+					Appt appt3 = new Appt(1, 1, 1, 1, 2017, "Test", "This is a test");
+
+					assertEquals(0, appt1.compareTo(appt2));
+					assertEquals(11, appt1.compareTo(appt3));
+				}
+
 }

@@ -77,17 +77,56 @@ public class TimeTableTest {
 		 TimeTable t = new TimeTable();
 		 GregorianCalendar day1 = new GregorianCalendar(2018, 1, 1);
 		 GregorianCalendar day2 = new GregorianCalendar(2018, 2, 1);
-		 Appt appt2 = new Appt(1, 1, 1, 1, 2018, "Test", "This is a test"); //Valid appt at base case time
-		 Appt appt3 = new Appt(2, 1, 5, 1, 2018, "Test", "This is a test"); //Valid appt with recurrences 5 days and 1 hour after base time
-		 Appt appt4 = new Appt(3, 1, 1, 1, 2018, "Test", "This is a test");
+		 Appt appt2 = new Appt(1, 1, 1, 1, 2018, "Test1", "This is a test"); //Valid appt at base case time
+		 Appt appt3 = new Appt(2, 1, 5, 1, 2018, "Test2", "This is a test"); //Valid appt with recurrences 5 days and 1 hour after base time
+		 Appt appt4 = new Appt(3, 1, 1, 1, 2018, "Test3", "This is a test");
 		 CalDay c1 = new CalDay(day1);
 
 		 c1.addAppt(appt2);
 		 c1.addAppt(appt3);
 		 c1.addAppt(appt4);
 		 int[] myArray  = new int[]{1, 2, 0};
+		 //assertNotNull(t.permute(c1.getAppts(), myArray));
+		 assertEquals("Test1", t.permute(c1.getAppts(), myArray).get(0).getTitle());
+		 assertEquals("Test2", t.permute(c1.getAppts(), myArray).get(1).getTitle());
+		 assertEquals("Test3", t.permute(c1.getAppts(), myArray).get(2).getTitle());
 
-		 t.permute(c1.getAppts(), myArray);
 	}
+
+
+	@Test
+		public void test04() throws Throwable {
+			TimeTable t = new TimeTable();
+			GregorianCalendar day1 = new GregorianCalendar(2018, 1, 1);
+			GregorianCalendar day2 = new GregorianCalendar(2018, 2, 1);
+			Appt appt = new Appt(1, 1, 1, 1, 2018, "Test", "This is a test"); //Invalid appt
+			Appt appt2 = new Appt(2, 1, 1, 1, 2018, "Test", "This is a test"); //Invalid appt
+			CalDay c1 = new CalDay(day1);
+
+			c1.addAppt(appt);
+			c1.addAppt(appt2);
+			assertEquals(1, t.getApptRange(c1.getAppts(), day1, day2).get(0).getAppts().size());
+		}
+
+		@Test
+			public void test05() throws Throwable {
+				TimeTable t = new TimeTable();
+				GregorianCalendar day1 = new GregorianCalendar(2018, 1, 1);
+				GregorianCalendar day2 = new GregorianCalendar(2018, 2, 1);
+				CalDay c1 = new CalDay(day1);
+				Appt appt = new Appt(1, 1, 1, 1, 2018, "Test", "This is a test"); //Invalid appt
+				Appt appt3 = new Appt(3, 1, 1, 1, 2018, "Test", "This is a test"); //Invalid appt
+				Appt appt2 = new Appt(2, 1, 1, 1, 2018, "Test", "This is a test"); //Invalid appt
+				Appt appt4 = new Appt(4, 1, 1, 1, 2018, "Test", "This is a test"); //Invalid appt
+				Appt appt5 = new Appt(5, 1, 1, 1, 2018, "Test", "This is a test"); //Invalid appt
+
+				c1.addAppt(appt); c1.addAppt(appt2); c1.addAppt(appt3); c1.addAppt(appt4); c1.addAppt(appt5);
+
+				assertEquals(null, t.deleteAppt(c1.getAppts(), appt5));
+				assertEquals(4, t.deleteAppt(c1.getAppts(), appt4).size());
+				// assertEquals(2, t.deleteAppt(c1.getAppts(), appt3).size());
+				// assertEquals(1, t.deleteAppt(c1.getAppts(), appt2).size());
+				// assertEquals(0, t.deleteAppt(c1.getAppts(), appt).size());
+			}
 //add more unit tests as you needed
 }

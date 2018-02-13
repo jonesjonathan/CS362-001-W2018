@@ -74,5 +74,21 @@ public class CalDayTest {
 			assertNotNull(c2.toString());
 			assertTrue(c2.isValid());
 		}
+
+		@Test
+			public void test04() throws Throwable
+			{
+				Appt appt1 = new Appt(1, 1, 1, 1, 2018, "Test01", "This is a test");
+				Appt appt2 = new Appt(1, 1, 1, 1, 2018, "Test02", "This is a test");
+				GregorianCalendar cal = new GregorianCalendar(2018, 1, 1);
+				CalDay c = new CalDay(cal);
+					assertNotNull(c.getAppts());
+					assertEquals(0, c.getAppts().size());
+				c.addAppt(appt1);
+				c.addAppt(appt2);
+
+				assertEquals("Test01", c.getAppts().get(0).getTitle());
+				assertEquals("Test02", c.getAppts().get(1).getTitle());
+			}
 //add more unit tests as you needed
 }
