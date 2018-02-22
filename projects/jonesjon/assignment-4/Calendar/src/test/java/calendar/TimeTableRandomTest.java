@@ -87,7 +87,11 @@ public class TimeTableRandomTest {
 							tt.getApptRange(appts, gCal, gCal2);
 
 	 					}
-						tt.deleteAppt(appts, appt);
+						for(int i=0;i<appts.size();i++){
+                Appt tempAppt=appts.get(i);
+                tt.deleteAppt(appts, tempAppt);
+                }
+
 	 				// if(!appt.getValid())continue;
 	 			 // for (int i = 0; i < NUM_TESTS; i++) {
 	 			 //
