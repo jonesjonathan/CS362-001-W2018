@@ -45,7 +45,7 @@ protected void setUp() {
 //            UrlValidator.ALLOW_2_SLASHES
 //                + UrlValidator.ALLOW_ALL_SCHEMES
 //                + UrlValidator.NO_FRAGMENTS;
-//    
+//
 //        testIsValid(testUrlPartsOptions, options);
    }
 
@@ -101,7 +101,7 @@ protected void setUp() {
          }
          String url = testBuffer.toString();
          boolean result = urlVal.isValid(url);
-         if(result == true)
+         if(result != true)
         	 System.out.println(url);
          assertEquals(url, expected, result);
          if (printStatus) {
