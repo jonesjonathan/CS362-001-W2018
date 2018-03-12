@@ -1,0 +1,13 @@
+Bugs in emardj's code:
+
+
+Bug 1:
+calendar.ApptTest Failed line 51 assertion fail:
+
+	The first bug I came across was a failed assertion running the isvalid() command on the appt I created. It was meant to be false but the program crashed. After I looked at the isValid() I noticed that the if statement checking for if the hour was valid or not had its || changed to a &&. The statement never evaluates to true and thus my assert is always going to fail.
+
+
+Bug 2:
+calendar.CalDayTest Failed line 54 assertion fail:
+
+	This bug was difficult to debug. I started by checking the getAppts() function that my actual assert called. After cross checking with my own calDayCode I figured that the bug was actually contained in the contruction of the cal day itself in my test function. I checked each of the set** functions and discovered that again like in appt.java there was a && changed to an || in setAppts. The appts were incorrectly made into a linked list and my check for the first expected element of the linked list failed.
